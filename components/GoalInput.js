@@ -7,13 +7,18 @@ export default function GoalInput(props) {
   function goalInputHandler(enteredText) {
     setEnteredGoalText(enteredText);
   }
+
+  function addGoalHandler() {
+    props.onAddGoal(enteredGoalText);
+    setEnteredGoalText('');
+  }
   
   return (
     <View style={styles.inputContainer}>
-      <TextInput placeholder="Enter your name" style={styles.textInput} onChangeText={goalInputHandler} />
-      <Button title="Add goal" onPress={() => props.onAddGoal(enteredGoalText)} />
+      <TextInput placeholder="Enter your name" style={styles.textInput} onChangeText={goalInputHandler} value={enteredGoalText} />
+      <Button title="Add goal" onPress={addGoalHandler} />
     </View>
-)
+  )
 };
 
 const styles = StyleSheet.create({
