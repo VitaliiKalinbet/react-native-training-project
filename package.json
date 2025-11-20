@@ -17,9 +17,5 @@
     "react": "19.1.0",
     "react-native": "0.81.5"
   },
-  "private": true,
-  "overrides": {
-    "babel-plugin-react-compiler": "0.0.0",
-    "@babel/helper-create-class-features-plugin": "7.28.3"
-  }
+  "private": true
 }
