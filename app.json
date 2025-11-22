@@ -3,7 +3,7 @@
     "name": "react-native-training-project",
     "slug": "react-native-training-project",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
