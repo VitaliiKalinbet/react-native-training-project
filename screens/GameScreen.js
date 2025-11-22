@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, Alert, FlatList, Text } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Title from '../components/ui/Title';
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -24,6 +24,7 @@ function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -56,9 +57,8 @@ function GameScreen({ userNumber, onGameOver }) {
 
   const guessRoundsListLength = guessRounds.length;
 
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+  let cardContent =
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
@@ -77,6 +77,25 @@ function GameScreen({ userNumber, onGameOver }) {
         <View>
         </View>
       </Card>
+    </>;
+  
+  if (width > 500) {
+    cardContent = 
+      <View style={styles.buttonsContainerWide}>
+        <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+          <Ionicons name="remove" size={24} color="white" />
+        </PrimaryButton>  
+        <NumberContainer>{currentGuess}</NumberContainer>
+        <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>
+          <Ionicons name="add" size={24} color="white" />
+        </PrimaryButton>
+      </View>
+  }
+
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {cardContent}
       <View style={styles.listContainer}>
         <FlatList
           data={guessRounds}
@@ -109,6 +128,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  buttonsContainerWide: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   listContainer: {
     flex: 1,
